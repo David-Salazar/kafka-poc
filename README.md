@@ -6,7 +6,7 @@ streams tweets from my own Twitter account in real time.
 # Running instructions
 
 1. Put your own twitter authentication keys in the `twitter_oauth.ini` configuration file. 
-2. `cd` into the folder containing the installation. Run the following commands in the terminal 
+2. `cd` into the folder containing the installation. Run the following commands in two terminals 
    (once you have Apache Kafka installed in your system). These commands create the zookeeper
    and kafka servers in your local computer
 
@@ -20,7 +20,7 @@ kafka-server-start config/server.properties
  kafka-topics --bootstrap-server localhost:9092 --topic timeline_tweets --create --partitions 3
 ```
 
-4. Create an Apache Kafka consumer in your terminal with the following command:
+4. Create (only if this is your first time running the project) an Apache Kafka consumer in your terminal with the following command:
 
 ```
 kafka-console-consumer --bootstrap-server localhost:9092 --topic timeline_tweets
@@ -29,5 +29,5 @@ kafka-console-consumer --bootstrap-server localhost:9092 --topic timeline_tweets
 created and, finally, your CLI consumer will read these very same tweets. 
    
 ```
-python main.py
+python producer.py
 ```
