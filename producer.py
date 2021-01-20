@@ -18,5 +18,5 @@ if __name__ == "__main__":
                              )
     myStreamListener = TwitterStream(producer)
     myStream = tweepy.Stream(auth=api.auth, listener=myStreamListener)
-    myStream.filter(track=["Bitcoin"])
+    myStream.filter(track=["Trump"])
     myStreamListener.producer.close()

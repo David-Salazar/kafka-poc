@@ -14,7 +14,7 @@ def get_authentication_keys(config_file_path: str) -> Tuple[str, str, str, str]:
     return consumer_key, consumer_secret, access_token, access_token_secret
 
 
-def get_twitter_api(config_file_path: str = 'twitter_oauth.ini'):
+def get_twitter_api(config_file_path: str = '../twitter_oauth.ini'):
     """Return the twitter API after performing authenticatiion with a config file"""
     consumer_key, consumer_secret, access_token, access_token_secret = get_authentication_keys(config_file_path)
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
