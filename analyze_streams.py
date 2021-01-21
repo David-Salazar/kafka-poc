@@ -1,5 +1,5 @@
 import logging
-from kafka import KafkaConsumer
+from kafka import KafkaConsumer, KafkaProducer
 import json
 from transformers import pipeline
 
@@ -11,6 +11,12 @@ if __name__ == "__main__":
               'China']
     consumer = KafkaConsumer('timeline_tweets', bootstrap_servers='localhost:9092',
                              value_deserializer=lambda x: json.loads(x.decode('utf-8')))
+
+    producer = KafkaProducer(bootstrap_servers="localhost:9092", compression_type="gzip",
+                             value_serializer=lambda x:
+                             json.dumps(x).encode('utf-8')
+                             )
+
     for msg in consumer:
         tweet_dict = json.loads(json.dumps(msg.value))
         # check if text has been truncated
@@ -27,6 +33,12 @@ if __name__ == "__main__":
         hf_topic = topic_classifier(text, TOPICS)
         topic_pred = hf_topic['labels'][0]
         topic_score = hf_topic['scores'][0]
-        print(text, sentiment_pred, sentiment_score, topic_pred, topic_score)
-
+        data = {
+            "sentiment_pred": sentiment_pred,
+            "sentiment_score": sentiment_score,
+            "hf_topic": hf_topic,
+            "topic_pred": topic_pred,
+            "topic_score": topic_score
+        }
+        producer.send(topic="analyzed_data", value=json.dumps(data))
 
