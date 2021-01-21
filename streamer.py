@@ -14,14 +14,8 @@ class TwitterStream(tweepy.StreamListener):
         # if "retweeted_status" attribute exists, flag this tweet as a retweet.
         is_retweet = hasattr(status, "retweeted_status")
 
-        # check if text has been truncated
-        if hasattr(status, "extended_tweet"):
-            text = status.extended_tweet["full_text"]
-        else:
-            text = status.text
-
         if not is_retweet:
-            self.producer.send(topic="timeline_tweets", value=text)
+            self.producer.send(topic="timeline_tweets", value=status._json)
 
     def on_error(self, status_code):
         """If there's an error reading a tweet."""
