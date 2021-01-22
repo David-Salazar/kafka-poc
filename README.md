@@ -31,3 +31,12 @@ created and, finally, your CLI consumer will read these very same tweets.
 ```
 python producer.py
 ```
+
+cd producer
+docker image build -t kafka_producer .
+docker container run --network="host" kafka_producer
+
+cd ../stream_analysis
+docker image build -t streams_analysis .
+docker container run --network="host" streams_analysis
+
