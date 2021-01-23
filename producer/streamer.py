@@ -11,11 +11,7 @@ class TwitterStream(tweepy.StreamListener):
 
     def on_status(self, status):
         """Once the tweet has been read, it is sent to the Kafka topic"""
-        # if "retweeted_status" attribute exists, flag this tweet as a retweet.
-        is_retweet = hasattr(status, "retweeted_status")
-
-        if not is_retweet:
-            self.producer.send(topic="timeline_tweets", value=status._json)
+        self.producer.send(topic="timeline_tweets", value=status._json)
 
     def on_error(self, status_code):
         """If there's an error reading a tweet."""
