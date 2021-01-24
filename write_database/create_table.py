@@ -1,6 +1,8 @@
 # %%
 import pymysql
 import logging
+import configparser
+
 
 def create_database():
     """Creates a database"""
@@ -35,10 +37,12 @@ def create_table():
 
 
 if __name__ == "__main__":
-    ENDPOINT = "database-kaka.c8wdpocz3thc.us-east-1.rds.amazonaws.com"
-    PASSWORD = "Bf2TiD4M4aOpbglEd9lM"
-    DBNAME = "databasekafka"
-    USR = "admin"
-    PORT = 3306
+    config = configparser.ConfigParser()
+    config.read("db_auth.ini")
+    ENDPOINT = config["DB"]["ENDPOINT"]
+    PASSWORD = config["DB"]["PASSWORD"]
+    DBNAME = config["DB"]["DBNAME"]
+    USR = config["DB"]["USR"]
+    PORT = int(config["DB"]["PORT"])
     create_database()
     create_table()

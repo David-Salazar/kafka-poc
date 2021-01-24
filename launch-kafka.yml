@@ -47,3 +47,11 @@ services:
     restart: always
     depends_on:
       - "kafka1"
+
+  database:
+    build: ./write_database
+    image: kafka-db
+    network_mode: host
+    restart: always
+    depends_on:
+      - "kafka1"

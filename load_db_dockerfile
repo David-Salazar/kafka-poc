@@ -1,9 +1,0 @@
-FROM huggingface/transformers-tensorflow-cpu
-
-COPY . python_scripts/
-
-RUN pip3 install tweepy
-
-WORKDIR /workspace/python_scripts/
-
-CMD ["python3", "load_db.py"]

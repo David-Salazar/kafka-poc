@@ -2,12 +2,15 @@ from kafka import KafkaConsumer
 import json
 import pymysql
 import datetime
+import configparser
 
-ENDPOINT = "database-kaka.c8wdpocz3thc.us-east-1.rds.amazonaws.com"
-PASSWORD = "Bf2TiD4M4aOpbglEd9lM"
-DBNAME = "databasekafka"
-USR = "admin"
-PORT = 3306
+config = configparser.ConfigParser()
+config.read("db_auth.ini")
+ENDPOINT = config["DB"]["ENDPOINT"]
+PASSWORD = config["DB"]["PASSWORD"]
+DBNAME = config["DB"]["DBNAME"]
+USR = config["DB"]["USR"]
+PORT = int(config["DB"]["PORT"])
 
 if __name__ == '__main__':
     consumer = KafkaConsumer('analyzed_data', bootstrap_servers='localhost:9092',

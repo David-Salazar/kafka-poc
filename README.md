@@ -1,42 +1,51 @@
-# Learning Apache Kafka
+# Apache Kafka POC (WIP)
 
-Apache Kafka is a high throughput distributed messaging system. This repository is  a POC creating a Producer that 
-streams tweets from my own Twitter account in real time. 
+This is a POC to explore how to create an application that predicts **streaming data** in real time using state-of-the-art 
+NLP models. To do so, we make extensive use of **Apache Kafka**'s python client and the **Hugging Face** library.
+
+## Project's Architecture
+
+This repository is a POC to demonstrate how one would 
+analyze *COVID-19* related tweets in real time. The project works thus:
+
+![img.png](img.png)
+
+1. By taking advantage of Twitter's *Streaming* API, an Apache Kafka **Producer** writes the tweets into an **Apache Kafka's topic** inside a Kafka server.
+   
+1. Then, an Apache Kafka **Consumer** reads the tweets and uses pre-trained Hugging Face's 
+models to perform sentiment and topic classification; finally, this very same server creates a **Producer** to write the 
+modelling results back to another **Apache Kafka topic**.
+
+1. At last, a final **Apache Kafka Consumer** reads the modelling results
+and writes them into a **MySQL database**. 
+   
+1. (TODO) Perform further data analysis on the results stored in the MySQL database. 
+
+
+## Development environment
+
+At the moment, this POC is in a dev environment where everything runs locally. In order to modularize the different 
+components as much as possible, we've developed this application in a multi container environment: each of the components
+runs on its very own Docker container. Therefore, we simulate as close as possible a real deployment scenario where each of the
+components runs on a different (cluster of) server(s). 
 
 # Running instructions
 
-1. Put your own twitter authentication keys in the `twitter_oauth.ini` configuration file. 
-2. `cd` into the folder containing the installation. Run the following commands in two terminals 
-   (once you have Apache Kafka installed in your system). These commands create the zookeeper
-   and kafka servers in your local computer
+To run this application, you must have Docker and Docker-Compose installed in your machine. Please, clone this repository and run the following 
+`docker-compose` command to build the required images:
 
 ```
-zookeeper-server-start config/zookeeper.properties
-kafka-server-start config/server.properties
-```
-3. Create a Kafka topic to store the tweets:
-
-```
- kafka-topics --bootstrap-server localhost:9092 --topic timeline_tweets --create --partitions 3
+docker-compose -f launch-kafka.yml build
 ```
 
-4. Create (only if this is your first time running the project) an Apache Kafka consumer in your terminal with the following command:
+Finally, run the following command to start all the components. 
 
 ```
-kafka-console-consumer --bootstrap-server localhost:9092 --topic timeline_tweets
-```
-5. Run `main.py`. It will read the tweets from your timeline, create a producer that reads into the topic you just
-created and, finally, your CLI consumer will read these very same tweets. 
-   
-```
-python producer.py
+docker-compose -f launch-kafka.yml up
 ```
 
-cd producer
-docker image build -t kafka_producer .
-docker container run --network="host" kafka_producer
+Now the application is up and running! It's reading tweets in real time, processing them using state of the art NLP models,
+classifying whether the tweet is positive or negative and then classifying the tweets into 14 different topics. Finally, the results
+are written to a MySQL database hosted in AWS. All through the magic of Apache Kafka!
 
-cd ../stream_analysis
-docker image build -t streams_analysis .
-docker container run --network="host" streams_analysis
 
