@@ -30,17 +30,20 @@ services:
     volumes:
       - ./zk-single-kafka-single/kafka1/data:/var/lib/kafka/data
     depends_on:
-      - zoo1
+      - "zoo1"
 
   producer:
     build: ./producer
     image: kafka-producer
     network_mode: host
+    restart: always
     depends_on:
-      - kafka1
+      - "kafka1"
+
   streams:
     build: ./stream_analysis
     image: kafka-streams
     network_mode: host
+    restart: always
     depends_on:
-      - kafka1
+      - "kafka1"
