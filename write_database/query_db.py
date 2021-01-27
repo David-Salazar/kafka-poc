@@ -13,4 +13,5 @@ with connection.cursor() as cur:
     cur.execute('SELECT * FROM covid_tweets')
 
     rows = cur.fetchall()
-    print(len(rows))
+    for row in rows:
+        print(row[0], row[1], row[2], row[3], row[4])
