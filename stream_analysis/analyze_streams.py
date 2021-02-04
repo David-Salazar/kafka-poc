@@ -5,9 +5,7 @@ from transformers import pipeline
 if __name__ == "__main__":
     classifier = pipeline('sentiment-analysis')
     topic_classifier = pipeline("zero-shot-classification")
-    TOPICS = ['the economy', 'education', 'commerce', 'politics', 'public health', 'vaccines', 'conspiracy',
-              'sports events', 'comedy', 'mental health', 'death', 'disease', 'natural environment', 'globalization',
-              'China']
+    TOPICS = ['the economy', 'education', 'politics', 'vaccines', 'health', 'work from home']
     consumer = KafkaConsumer('timeline_tweets', bootstrap_servers='localhost:9092',
                              value_deserializer=lambda x: json.loads(x.decode('utf-8')))
 
