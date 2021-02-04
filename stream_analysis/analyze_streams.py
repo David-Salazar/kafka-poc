@@ -1,4 +1,3 @@
-import logging
 from kafka import KafkaConsumer, KafkaProducer
 import json
 from transformers import pipeline
@@ -41,7 +40,7 @@ if __name__ == "__main__":
             "topic_pred": topic_pred,
             "topic_score": topic_score
         }
+        del tweet_dict
         jsonified_data = json.dumps(data)
-        logging.info((type(jsonified_data), jsonified_data))
         producer.send(topic="analyzed_data", value=jsonified_data)
 

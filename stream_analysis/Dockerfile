@@ -1,9 +1,9 @@
-FROM continuumio/miniconda3:4.9.2-alpine
+FROM huggingface/transformers-pytorch-gpu:4.2.2
 
 COPY . /usr/local/python/
 
 WORKDIR /usr/local/python/
 
-RUN pip3 install transformers[tf-cpu] kafka-python && python hfmodels.py
+RUN pip3 install kafka-python && python hfmodels.py
 
 CMD python analyze_streams.py
