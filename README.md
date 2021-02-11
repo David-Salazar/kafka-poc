@@ -26,6 +26,7 @@ conda env create -f environment.yml
 conda activate docker-stats
 voila data_analysis.ipynb
 ```
+    Finally, to see the live dashboard go to http://localhost:8866/ in your browser.
 
 ## Development environment
 
