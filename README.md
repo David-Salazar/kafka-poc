@@ -19,8 +19,13 @@ modelling results back to another **Apache Kafka topic**.
 1. At last, a final **Apache Kafka Consumer** reads the modelling results
 and writes them into a **MySQL database**. 
    
-1. (TODO) Perform further data analysis on the results stored in the MySQL database. 
+1. In order to analyze the data, you can check a live dashboard of the results with the following python app:
 
+```
+conda env create -f environment.yml
+conda activate docker-stats
+voila data_analysis.ipynb
+```
 
 ## Development environment
 
