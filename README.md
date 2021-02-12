@@ -19,14 +19,7 @@ modelling results back to another **Apache Kafka topic**.
 1. At last, a final **Apache Kafka Consumer** reads the modelling results
 and writes them into a **MySQL database**. 
    
-1. In order to analyze the data, you can check a live dashboard of the results with the following python app:
-
-```
-conda env create -f environment.yml
-conda activate docker-stats
-voila data_analysis.ipynb
-```
-    Finally, to see the live dashboard go to http://localhost:8866/ in your browser.
+1. In order to analyze the data, you can check a live dashboard of the results with the following python at http://localhost:8866/ in your browser.
 
 ## Development environment
 

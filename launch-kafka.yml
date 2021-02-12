@@ -55,3 +55,9 @@ services:
     restart: always
     depends_on:
       - "kafka1"
+
+  dashboard:
+    build: ./dashboard
+    image: kafka_dashboard
+    ports:
+      - 8866:8866

@@ -9,3 +9,6 @@ dependencies:
       - jupyterlab==3.0.6
       - ipympl==0.6.3
       - ipywidgets==7.6.3
+      - PyMySQL==1.0.2
+      - wordcloud==1.8.1
+      - statsmodels==0.12.1
